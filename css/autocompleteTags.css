@@ -1,0 +1,144 @@
+.selected-area:before,
+.options-area:before {
+    display: block;
+    padding: 5px 22px 15px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: #959595;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    content: "Advanced";
+}
+
+.selected-area:before,
+.options-area:before {
+    width: 100%;
+    padding: 5px 0px 15px;
+}
+
+.selected-area:before {
+    content: "Selected";
+}
+
+.options-area:before {
+    content: 'Options'
+}
+
+.dialog {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 60%;
+    max-width: 840px;
+    min-width: 600px;
+    min-height: 300px;
+    transform: translate(-50%, -50%);
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.52);
+    outline: 600px solid rgba(0, 0, 0, 0.45);
+    background: white;
+}
+
+.dialog-title {
+    padding: 5px;
+    border-bottom: 1px solid #bbb;
+    font-size: 18px;
+}
+
+.dialog-content {
+    padding: 8px;
+}
+
+.tags-container {
+    padding: 0;
+    margin: 0 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag {
+    margin: 2px;
+    cursor: pointer;
+    padding: 2px 5px;
+    border: 1px solid #adadad;
+    border-radius: 3px;
+}
+
+.tag:hover {
+    background-color: #e6e6e6;
+}
+
+.selected {
+    background-color: #5cb85c;
+    border: 1px solid #4cae4c;
+    color: #fff;
+    cursor: default;
+}
+
+.selected:hover {
+    background-color: #449d44;
+    border-color: #398439;
+}
+
+.selected .iconfont {
+    font-size: 12px;
+}
+
+.options-area {
+    margin-bottom: 50px;
+}
+
+.dialog-close-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dialog-tag-input {
+    width: 140px;
+    margin: 2px;
+}
+
+.auto-complete-box {
+    display: inline-flex;
+    width: 600px;
+    border-bottom: 1px solid #939292;
+}
+
+.auto-complete-box input {
+    flex: auto;
+    border: none;
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid #939292;
+    padding: 4px 0;
+    outline: none;
+}
+
+.auto-complete-box .tag {
+    flex: none;
+}
+
+button {
+    font-size: 18px;
+    padding: 5px 8px;
+    background: white;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 3px;
+    color: #333;
+}
+
+button:hover {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+.pull-right {
+    float: right;
+}
