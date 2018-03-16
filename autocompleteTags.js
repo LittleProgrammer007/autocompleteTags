@@ -3,7 +3,7 @@
  * @version 1.0.0
  */
 
-(function() {
+(function () {
     /**  
 	 * 多语言
 	 * @enum
@@ -23,7 +23,7 @@
             return this.properties;
         }
 
-        setProperties(selector, options={}) {
+        setProperties(selector, options = {}) {
             //确认参数类型正确
             if (typeof selector !== 'string') {
                 throw new Error('selector must be a css selector');
@@ -34,9 +34,9 @@
             }
 
             let source = this.getStrArrayBySource(options.source, 'source')
-              , availableTags = this.getStrArrayBySource(options.availableTags, 'availableTags').filter(op => source.indexOf(op) === -1).sort();
+                , availableTags = this.getStrArrayBySource(options.availableTags, 'availableTags').filter(op => source.indexOf(op) === -1).sort();
 
-            let {allowCreate=true, maxNum=0, separator=',', enterSplitEnable=true, lang=AutocompleteTags.defaultLanguage, readonly=false} = options;
+            let { allowCreate = true, maxNum = 0, separator = ',', enterSplitEnable = true, lang = AutocompleteTags.defaultLanguage, readonly = false } = options;
 
             allowCreate = !!allowCreate;
 
@@ -82,7 +82,7 @@
 
         initDOM() {
             const properties = this.properties;
-            const {source, availableTags, selector, widgetId, dialogId, readonly} = properties;
+            const { source, availableTags, selector, widgetId, dialogId, readonly } = properties;
             let sourceHtml = '';
             if (readonly) {
                 for (let tag of source) {
@@ -95,7 +95,7 @@
             } else {
 
                 let allHtml = ''
-                  , allOptions = [];
+                    , allOptions = [];
 
                 for (let tag of source) {
                     sourceHtml += '<span class="tag selected">' + tag + ' <i class="iconfont icon-remove"></i></span>';
@@ -112,7 +112,7 @@
                     });
                 }
 
-                allOptions.sort((a,b)=>this.compareTags(a.tag, b.tag));
+                allOptions.sort((a, b) => this.compareTags(a.tag, b.tag));
 
                 for (let op of allOptions) {
                     if (op.selected) {
@@ -127,8 +127,8 @@
                 let widgetEle = document.getElementById(widgetId)
                 properties.el = widgetEle;
 
-                widgetEle.addEventListener('click', event=>this.handleClickAtWidget(event), false);
-                widgetEle.getElementsByClassName('tag-input')[0].addEventListener('keydown', event=>this.handleInput(event), false);
+                widgetEle.addEventListener('click', event => this.handleClickAtWidget(event), false);
+                widgetEle.getElementsByClassName('tag-input')[0].addEventListener('keydown', event => this.handleInput(event), false);
 
                 let dialogEl = document.createElement('div');
                 dialogEl.setAttribute('class', 'dialog');
@@ -140,11 +140,11 @@
 
                 properties.dialogEl = document.getElementById(dialogId);
 
-                dialogEl.getElementsByClassName('dialog-close')[0].addEventListener('click', event=>this.closeDialog(event), false);
-                dialogEl.getElementsByClassName('dialog-close-btn')[0].addEventListener('click', event=>this.closeDialog(event), false);
-                dialogEl.getElementsByClassName('dialog-tag-input')[0].addEventListener('keydown', event=>this.handleDialogInput(event), false);
-                dialogEl.getElementsByClassName('selected-area')[0].addEventListener('click', event=>this.handleClickAtSelectedArea(event), false);
-                dialogEl.getElementsByClassName('options-area')[0].addEventListener('click', event=>this.handleClickAtOptionsArea(event), false);
+                dialogEl.getElementsByClassName('dialog-close')[0].addEventListener('click', event => this.closeDialog(event), false);
+                dialogEl.getElementsByClassName('dialog-close-btn')[0].addEventListener('click', event => this.closeDialog(event), false);
+                dialogEl.getElementsByClassName('dialog-tag-input')[0].addEventListener('keydown', event => this.handleDialogInput(event), false);
+                dialogEl.getElementsByClassName('selected-area')[0].addEventListener('click', event => this.handleClickAtSelectedArea(event), false);
+                dialogEl.getElementsByClassName('options-area')[0].addEventListener('click', event => this.handleClickAtOptionsArea(event), false);
             }
         }
 
@@ -185,7 +185,8 @@
         }
 
         handleInput(event) {
-            let {keyCode, key, target: {value}} = event
+            //由于输入法，会有keycode:229的问题。据说使用keyup可以解决
+            let { keyCode, key, target: { value } } = event
             if (key === this.properties.separator || (keyCode === 13 && this.properties.enterSplitEnable)) {
                 //separator or enter
                 event.preventDefault();
@@ -201,7 +202,7 @@
         }
 
         handleDialogInput(event) {
-            let {keyCode, target: {value}} = event
+            let { keyCode, target: { value } } = event
             if (keyCode === 13) {
                 //enter
                 event.preventDefault();
@@ -215,7 +216,7 @@
                 return;
             }
 
-            const {source, availableTags, allowCreate, maxNum} = this.properties;
+            const { source, availableTags, allowCreate, maxNum } = this.properties;
 
             //check for duplication
             if (source.indexOf(tag) !== -1) {
@@ -235,12 +236,12 @@
             }
 
             switch (type) {
-            case 1:
-                this.cleanWidget();
-                break;
-            case 2:
-                this.cleanDialog();
-                break;
+                case 1:
+                    this.cleanWidget();
+                    break;
+                case 2:
+                    this.cleanDialog();
+                    break;
             }
 
         }
@@ -257,7 +258,7 @@
         }
 
         addTagToSourceArea(tag) {
-            const {source, el, dialogEl} = this.properties;
+            const { source, el, dialogEl } = this.properties;
 
             source.push(tag);
 
@@ -314,7 +315,7 @@
         findTagInOptionsArea(tag) {
             const optionArea = this.properties.dialogEl.getElementsByClassName('options-area')[0];
 
-            return [...optionArea.getElementsByClassName('tag')].find(function(el) {
+            return [...optionArea.getElementsByClassName('tag')].find(function (el) {
                 return el.innerText.trim() === tag;
             });
         }
@@ -331,7 +332,7 @@
             const tag = target.innerText;
             if (target.className === 'tag') {
                 //check maxNum
-                const {source, maxNum} = this.properties;
+                const { source, maxNum } = this.properties;
                 if (maxNum > 0 && source.length >= maxNum) {
                     return;
                 }
@@ -346,7 +347,7 @@
         removeTag(target) {
             //remove tag from dom
             let index = 0;
-            for (let e = target.parentNode.previousSibling; e != null; ) {
+            for (let e = target.parentNode.previousSibling; e != null;) {
                 e = e.previousSibling;
                 ++index;
             }
@@ -354,16 +355,19 @@
         }
 
         removeLastTag() {
-            this.removeTagFromSourceByIndex(this.properties.source.length - 1);
+            const { source } = this.properties;
+            if (source.length > 0) {
+                this.removeTagFromSourceByIndex(source.length - 1);
+            }
         }
 
         removeTagFromSourceArea(tag) {
-            const index = this.properties.source.findIndex(op=>op === tag);
+            const index = this.properties.source.findIndex(op => op === tag);
             this.removeTagFromSourceAreaByIndex(index);
         }
 
         removeTagFromSourceAreaByIndex(index) {
-            const {source, availableTags, el, dialogEl} = this.properties;
+            const { source, availableTags, el, dialogEl } = this.properties;
             availableTags.push(source[index]);
             source.splice(index, 1);
 
@@ -383,17 +387,140 @@
             return tagA > tagB;
         }
 
-		updateOptions(options){
-			return options;
-		}
+        updateOptions(options = {}) {
+            const properties = this.properties;
 
-		updateSource(source){
-			return source;
-		}
+            let { source, availableTags, allowCreate, maxNum, separator, enterSplitEnable, lang, readonly } = options;
 
-		updateAvailableTags(availableTags){
-			return availableTags;
-		}
+            if (typeof allowCreate !== 'undefined') {
+                properties.allowCreate = !!allowCreate;
+            }
+
+            if (typeof maxNum !== 'undefined') {
+                maxNum = + maxNum;
+                if (isNaN(maxNum)) {
+                    maxNum = 0;
+                }
+                properties.maxNum = maxNum;
+            }
+
+            if (typeof separator !== 'undefined') {
+                if (typeof separator !== 'string' || separator.length !== 1) {
+                    throw new Error('separator should be a character.')
+                }
+
+                properties.separator = separator;
+            }
+
+            if (typeof enterSplitEnable !== 'undefined') {
+                properties.enterSplitEnable = !!enterSplitEnable;
+            }
+
+            if (typeof lang !== 'undefined') {
+                if (!language.hasOwnProperty(lang)) {
+                    lang = AutocompleteTags.defaultLanguage;
+                }
+                properties.lang = lang;
+                //TODO
+            }
+
+            if (typeof readonly !== 'undefined') {
+                properties.readonly = !!readonly;
+                //TODO
+            }
+
+            if (typeof source !== 'undefined') {
+                if (typeof availableTags !== 'undefined') {
+                    this.updateSourceAndAvailableTags(source, availableTags);
+                } else {
+                    this.updateSource(source);
+                }
+            } else if (typeof availableTags !== 'undefined') {
+                this.updateAvailableTags(availableTags);
+            }
+
+        }
+
+        refresh() {
+            const { source, availableTags } = this.properties;
+
+            this.updateSourceArea(source);
+            this.updateAvailArea(availableTags);
+            this.updateAllArea(source, availableTags)
+        }
+
+        updateSourceAndAvailableTags(source, availableTags) {
+            this.properties.source = source = this.getStrArrayBySource(source, 'source');
+            this.properties.availableTags = this.getStrArrayBySource(availableTags, 'availableTags').filter(op => source.indexOf(op) === -1).sort();
+
+            this.refresh();
+        }
+
+        updateSource(source) {
+            this.properties.source = source = this.getStrArrayBySource(source, 'source');
+            this.properties.availableTags = this.properties.availableTags.filter(op => source.indexOf(op) === -1).sort();
+
+            this.refresh();
+        }
+
+        updateAvailableTags(availableTags) {
+            const { source } = this.properties;
+            this.properties.availableTags = this.getStrArrayBySource(availableTags, 'availableTags').filter(op => source.indexOf(op) === -1).sort();
+
+            this.updateAvailArea(availableTags);
+            this.updateAllArea(source, availableTags)
+        }
+
+        updateSourceArea(source) {
+            const { dialogEl, el } = this.properties;
+
+            let sourceHtml = '';
+            for (let tag of source) {
+                sourceHtml += '<span class="tag selected">' + tag + ' <i class="iconfont icon-remove"></i></span>';
+            }
+
+            el.innerHTML = sourceHtml + '<input type="text" class="tag-input"><i class="iconfont icon-plus" title="Add"></i>';
+            el.getElementsByClassName('tag-input')[0].addEventListener('keydown', event => this.handleInput(event), false);
+
+            dialogEl.getElementsByClassName('selected-area')[0].innerHTML = sourceHtml;
+        }
+
+        updateAvailArea(availableTags) {
+            //TODO
+        }
+
+        updateAllArea(source, availableTags) {
+            const { dialogEl } = this.properties;
+
+            let allHtml = ''
+                , allOptions = [];
+
+            for (let tag of source) {
+                allOptions.push({
+                    tag,
+                    selected: 1,
+                });
+            }
+
+            for (let tag of availableTags) {
+                allOptions.push({
+                    tag,
+                    selected: 0,
+                });
+            }
+
+            allOptions.sort((a, b) => this.compareTags(a.tag, b.tag));
+
+            for (let op of allOptions) {
+                if (op.selected) {
+                    allHtml += '<span class="tag selected">' + op.tag + '</span>';
+                } else {
+                    allHtml += '<span class="tag">' + op.tag + '</span>';
+                }
+            }
+            dialogEl.getElementsByClassName('options-area')[0].innerHTML = allHtml + '<input type="text" placeholder="Add a new one" title="Enter to add" class="dialog-tag-input">';
+            dialogEl.getElementsByClassName('dialog-tag-input')[0].addEventListener('keydown', event => this.handleDialogInput(event), false);
+        }
 
         getStrArrayBySource(source, propertyName) {
             let arr = [];
@@ -437,9 +564,10 @@
 	 * 7.添加的新标签不能和已有标签重复，但可是可选标签中存在的。如果这个标签是个新标签，即不存在可选标签中
 	 * 8.只读
 	 * 9.配置刷新
+     * 10.多语言，国际化 
 	 */
     function AutocompleteTags(selector, options) {
-        const helper = new TagsHelper(selector,options);
+        const helper = new TagsHelper(selector, options);
         const properties = helper.getProperties();
 
         const widget = {
@@ -455,9 +583,9 @@
             get dialogId() {
                 return properties.dialogId;
             },
-			updateOptions: helper.updateOptions,
-			updateSource: helper.updateSource,
-			updateAvailableTags: helper.updateAvailableTags,
+            updateOptions: options => helper.updateOptions(options),
+            updateSource: source => helper.updateSource(source),
+            updateAvailableTags: availableTags => helper.updateAvailableTags(availableTags),
         }
 
         helper.initDOM();
@@ -467,7 +595,7 @@
 
     AutocompleteTags.lang = language;
 
-    AutocompleteTags.defaultLanguage = (function() {
+    AutocompleteTags.defaultLanguage = (function () {
         let localLang = navigator.language;
         if (localLang) {
             for (let lang of Object.getOwnPropertyNames(language)) {
@@ -484,9 +612,3 @@
 
 }
 )();
-
-var personTags = new AutocompleteTags('#person',{
-    availableTags: ['Bob', 'Lin', 'Tom', 'Jake'],
-    source: ['Lina'],
-    readonly: false,
-});

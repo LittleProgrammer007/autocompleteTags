@@ -103,11 +103,13 @@
 
 .auto-complete-box {
     display: inline-flex;
+    flex-wrap: wrap;
     width: 600px;
     border-bottom: 1px solid #939292;
 }
 
 .auto-complete-box input {
+    width: 1px;
     flex: auto;
     border: none;
 }
