@@ -94,7 +94,7 @@
                 }
             } else {
 
-                let allHtml = ''
+                let allHtml = '', availHtml = ''
                     , allOptions = [];
 
                 for (let tag of source) {
@@ -106,6 +106,7 @@
                 }
 
                 for (let tag of availableTags) {
+                    availHtml += '<div class="avail-tag">' + tag + '</div>'
                     allOptions.push({
                         tag,
                         selected: 0,
@@ -122,7 +123,9 @@
                     }
                 }
 
-                properties.el.outerHTML = '<div class="auto-complete-box" id="' + widgetId + '">' + sourceHtml + '<input type="text" class="tag-input"><i class="iconfont icon-plus" title="Add"></i></div>';
+                properties.el.outerHTML = '<div class="auto-complete-box" id="' + widgetId + '">' + sourceHtml
+                 + '<div class="auto-container"><input type="text" class="tag-input"><div class="auto-box">' + availHtml 
+                 + '</div></div><i class="iconfont icon-plus" title="Add"></i></div>';
 
                 let widgetEle = document.getElementById(widgetId)
                 properties.el = widgetEle;
@@ -265,7 +268,7 @@
             const spanEl = document.createElement('span');
             spanEl.setAttribute('class', 'tag selected');
             spanEl.innerHTML = tag + ' <i class="iconfont icon-remove"></i>';
-            el.insertBefore(spanEl, el.getElementsByClassName('tag-input')[0]);
+            el.insertBefore(spanEl, el.getElementsByClassName('auto-container')[0]);
 
             const selectedEle = document.createElement('span');
             selectedEle.setAttribute('class', 'tag selected');

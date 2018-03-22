@@ -63,6 +63,7 @@
     padding: 2px 5px;
     border: 1px solid #adadad;
     border-radius: 3px;
+    line-height: 28px;
 }
 
 .tag:hover {
@@ -83,6 +84,7 @@
 
 .selected .iconfont {
     font-size: 12px;
+    line-height: 1;
 }
 
 .options-area {
@@ -108,10 +110,30 @@
     border-bottom: 1px solid #939292;
 }
 
-.auto-complete-box input {
-    width: 1px;
+.auto-container{
     flex: auto;
+    position: relative;
+}
+
+.tag-input {
+    width: 100%;
+    line-height: 30px;
     border: none;
+}
+
+.auto-box{
+    position: absolute;
+    width: 100%;
+    border: 1px solid #939292;
+    border-radius: 0 0 3px 3px;
+}
+
+.avail-tag{
+    border-bottom: 1px solid #939292;    
+}
+
+.avail-tag:last-child{
+    border: none;    
 }
 
 input {
