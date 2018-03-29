@@ -570,30 +570,35 @@
      * 10.多语言，国际化 
 	 */
     function AutocompleteTags(selector, options) {
-        const helper = new TagsHelper(selector, options);
-        const properties = helper.getProperties();
-
-        const widget = {
-            get id() {
-                return properties.widgetId;
-            },
-            get source() {
-                return properties.source;
-            },
-            get availableTags() {
-                return properties.availableTags;
-            },
-            get dialogId() {
-                return properties.dialogId;
-            },
-            updateOptions: options => helper.updateOptions(options),
-            updateSource: source => helper.updateSource(source),
-            updateAvailableTags: availableTags => helper.updateAvailableTags(availableTags),
+        if(new.target){
+            //通过new操作符调用
+            const helper = new TagsHelper(selector, options);
+            const properties = helper.getProperties();
+    
+            const widget = {
+                get id() {
+                    return properties.widgetId;
+                },
+                get source() {
+                    return properties.source;
+                },
+                get availableTags() {
+                    return properties.availableTags;
+                },
+                get dialogId() {
+                    return properties.dialogId;
+                },
+                updateOptions: options => helper.updateOptions(options),
+                updateSource: source => helper.updateSource(source),
+                updateAvailableTags: availableTags => helper.updateAvailableTags(availableTags),
+            }
+    
+            helper.initDOM();
+    
+            return Object.freeze(widget);
+        }else{
+            //普通函数调用时怎么处理
         }
-
-        helper.initDOM();
-
-        return Object.freeze(widget);
     }
 
     AutocompleteTags.lang = language;
